@@ -62,9 +62,8 @@
             "longitude": 23.2217
         },
         "openingHours": [
-            "Mo-Tu 10:00-22:00",
-            "We-Th 10:00-22:00",
-            "Fr-Sa 10:00-22:00"
+            "Mo-Fr 08:00-20:00",
+            "Sa 08:00-18:00"
         ],
         "servesCuisine": "Pizza",
         "priceRange": "$$",
@@ -1925,7 +1924,7 @@
             
             console.log('Mesaj WhatsApp creat:', message);
             
-            const whatsappNumber = '40755118646';
+            const whatsappNumber = '40755118646'; // numarul de telefon pentru comenzi
             const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
             
             console.log('Link WhatsApp:', whatsappLink);
