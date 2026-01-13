@@ -211,7 +211,7 @@
             background-size: cover;
         }
         
-        /* Cart System Styles */
+        /* stiluri pentru cosul de cumparaturi */
         .cart-sidebar {
             position: fixed;
             right: -400px;
@@ -366,7 +366,7 @@
             background: white;
         }
         
-        /* Desktop zoom fix */
+        /* fix pentru zoom pe desktop */
         @media (min-width: 1024px) {
             .checkout-modal .menu-modal-content {
                 max-width: 40%;
@@ -411,7 +411,7 @@
             }
         }
         
-        /* Mobile responsive */
+        /* optimizari pentru mobil */
         @media (max-width: 768px) {
             .checkout-modal .menu-modal-content {
                 max-width: 95%;
@@ -438,7 +438,7 @@
             }
         }
         
-        /* General checkout styles */
+        /* stiluri generale pentru finalizare comanda */
         .checkout-body {
             flex: 1;
             overflow-y: auto;
@@ -455,7 +455,7 @@
             gap: 16px;
         }
         
-        /* Button animations */
+        /* animatii pentru butoane */
         @keyframes pulse {
             0% {
                 box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
@@ -1209,7 +1209,7 @@
         </div>
     </section>
 
-<!-- Checkout Modal -->
+<!-- modal pentru finalizare comanda -->
 <div id="checkoutModal" class="menu-modal" onclick="hideCheckoutModal(event)">
   <div class="menu-modal-content" style="max-width: 600px;">
     <button class="menu-modal-close" onclick="hideCheckoutModal()">
@@ -1219,7 +1219,7 @@
     <div class="p-6 checkout-body">
       <h2 class="text-3xl font-bold playfair mb-6 text-center">Finalizează Comanda</h2>
 
-      <!-- Date Client -->
+      <!-- date client -->
       <div class="mb-6">
         <h3 class="text-xl font-bold mb-4">Date Contact</h3>
         <div class="space-y-4">
@@ -1370,7 +1370,7 @@
       </div>
     </div>
 
-    <!-- Butoane (footer) -->
+    <!-- butoane -->
     <div class="checkout-footer">
       <button onclick="hideCheckoutModal()" class="flex-1 px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
         <i class="fas fa-arrow-left mr-2"></i> Înapoi
@@ -1555,19 +1555,19 @@
     </footer>
 
     <script>
-        // Cart functionality
+        // functionalitate pentru cos
         let cart = [];
         
-        // Check restaurant status based on current time
+        // verifica statusul restaurantului in functie de ora
         function updateRestaurantStatus() {
             const now = new Date();
             const currentHour = now.getHours();
-            const currentDay = now.getDay(); // 0 = Sunday, 1 = Monday, etc.
+            const currentDay = now.getDay(); // 0 = duminica, 1 = luni, etc.
             
             const statusIndicator = document.getElementById('statusIndicator');
             const statusText = document.getElementById('statusText');
             
-            // Check if it's Sunday (closed)
+            // verifica daca e duminica (inchis)
             if (currentDay === 0) {
                 statusIndicator.className = 'w-2 h-2 rounded-full bg-red-500';
                 statusText.className = 'text-sm font-medium text-red-500';
@@ -1575,29 +1575,43 @@
                 return;
             }
             
-            // Check opening hours (Monday - Saturday: 10:00 - 22:00)
-            if (currentHour >= 10 && currentHour < 22) {
-                statusIndicator.className = 'w-2 h-2 rounded-full bg-green-500';
-                statusText.className = 'text-sm font-medium text-green-500';
-                statusText.textContent = 'Deschis';
-            } else {
-                statusIndicator.className = 'w-2 h-2 rounded-full bg-red-500';
-                statusText.className = 'text-sm font-medium text-red-500';
-                statusText.textContent = 'Închis';
+            // verifica orele de deschidere
+            if (currentDay === 6) { // sambata
+                // sambata: 8:00 - 18:00
+                if (currentHour >= 8 && currentHour < 18) {
+                    statusIndicator.className = 'w-2 h-2 rounded-full bg-green-500';
+                    statusText.className = 'text-sm font-medium text-green-500';
+                    statusText.textContent = 'Deschis';
+                } else {
+                    statusIndicator.className = 'w-2 h-2 rounded-full bg-red-500';
+                    statusText.className = 'text-sm font-medium text-red-500';
+                    statusText.textContent = 'Închis';
+                }
+            } else { // luni - vineri
+                // luni - vineri: 8:00 - 20:00
+                if (currentHour >= 8 && currentHour < 20) {
+                    statusIndicator.className = 'w-2 h-2 rounded-full bg-green-500';
+                    statusText.className = 'text-sm font-medium text-green-500';
+                    statusText.textContent = 'Deschis';
+                } else {
+                    statusIndicator.className = 'w-2 h-2 rounded-full bg-red-500';
+                    statusText.className = 'text-sm font-medium text-red-500';
+                    statusText.textContent = 'Închis';
+                }
             }
         }
         
-        // Update status immediately and then every minute
+        // actualizeaza statusul imediat si apoi la fiecare minut
         updateRestaurantStatus();
-        setInterval(updateRestaurantStatus, 60000); // Update every minute
+        setInterval(updateRestaurantStatus, 60000); // actualizeaza la fiecare minut
         
-        // Mobile menu toggle
+        // meniu mobil on/off
         function toggleMobileMenu() {
             const menu = document.getElementById('mobileMenu');
             menu.classList.toggle('hidden');
         }
         
-        // Cart functions
+        // functii pentru cosul de cumparaturi
         function showCart() {
             document.getElementById('cartSidebar').classList.add('open');
             document.getElementById('cartOverlay').classList.add('active');
@@ -1719,7 +1733,7 @@
                 return;
             }
             
-            // Show checkout modal instead of direct WhatsApp
+            // arata modalul pentru finalizare comanda in loc de whatsapp direct
             showCheckoutModal();
         }
         
@@ -1727,10 +1741,10 @@
             document.getElementById('checkoutModal').classList.add('active');
             document.body.style.overflow = 'hidden';
             
-            // Calculate and display totals
+            // calculeaza si afiseaza totalurile
             updateCheckoutTotals();
             
-            // Add event listeners for checkboxes
+            // adauga listener pentru checkbox-uri
             document.querySelectorAll('.sauce-checkbox, .drink-checkbox').forEach(checkbox => {
                 checkbox.addEventListener('change', updateCheckoutTotals);
             });
@@ -1775,7 +1789,7 @@
         
         function decreaseQuantity(itemId, price, name) {
             if (!extrasQuantities[itemId] || extrasQuantities[itemId] <= 1) {
-                // Uncheck and hide
+                // debifeaza si ascunde
                 const checkbox = document.querySelector(`input[onchange="toggleQuantity('${itemId}')"]`);
                 checkbox.checked = false;
                 document.getElementById(itemId + '-quantity').style.display = 'none';
@@ -1795,7 +1809,7 @@
             let extrasTotal = 0;
             const selectedExtras = [];
             
-            // Calculate sauces total with quantities
+            // calculeaza totalul sosurilor cu cantitati
             document.querySelectorAll('.sauce-checkbox:checked').forEach(checkbox => {
                 const price = parseFloat(checkbox.dataset.price);
                 const name = checkbox.dataset.name;
@@ -1806,7 +1820,7 @@
                 selectedExtras.push(`${name} x${quantity} - ${(price * quantity).toFixed(2)} lei`);
             });
             
-            // Calculate drinks total with quantities
+            // calculeaza totalul bauturilor cu cantitati
             document.querySelectorAll('.drink-checkbox:checked').forEach(checkbox => {
                 const price = parseFloat(checkbox.dataset.price);
                 const name = checkbox.dataset.name;
@@ -1819,7 +1833,7 @@
             
             const grandTotal = productsTotal + extrasTotal;
             
-            // Update display
+            // actualizeaza afisajul
             document.getElementById('productsTotal').textContent = productsTotal.toFixed(2) + ' lei';
             document.getElementById('extrasTotal').textContent = extrasTotal.toFixed(2) + ' lei';
             document.getElementById('grandTotal').textContent = grandTotal.toFixed(2) + ' lei';
@@ -1835,13 +1849,13 @@
             console.log('Date colectate:', { name, phone, address });
             console.log('Coș curent:', cart);
             
-            // Validate required fields
+            // valideaza campurile obligatorii
             if (!name || !phone || !address) {
                 showNotification('Vă rugăm completați toate câmpurile!');
                 return;
             }
             
-            // Validate phone format
+            // valideaza formatul telefonului
             const phoneRegex = /^(\+4|0)?7[0-9]{8}$/;
             const cleanPhone = phone.replace(/\s/g, '');
             if (!phoneRegex.test(cleanPhone)) {
@@ -1851,12 +1865,12 @@
             
             console.log('✅ Validare OK');
             
-            // Calculate totals
+            // calculeaza totalurile
             const productsTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             let extrasTotal = 0;
             const selectedExtras = [];
             
-            // Get selected sauces with quantities
+            // ia sosurile selectate cu cantitati
             document.querySelectorAll('.sauce-checkbox:checked').forEach(checkbox => {
                 const price = parseFloat(checkbox.dataset.price);
                 const name = checkbox.dataset.name;
@@ -1867,7 +1881,7 @@
                 selectedExtras.push(`${name} x${quantity}`);
             });
             
-            // Get selected drinks with quantities
+            // ia bauturile selectate cu cantitati
             document.querySelectorAll('.drink-checkbox:checked').forEach(checkbox => {
                 const price = parseFloat(checkbox.dataset.price);
                 const name = checkbox.dataset.name;
@@ -1882,7 +1896,7 @@
             
             console.log('Calcul total:', { productsTotal, extrasTotal, grandTotal });
             
-            // Build order details
+            // construieste detaliile comenzii
             const orderDetails = cart
             .map(item =>
             `${String(item.quantity).padStart(2,' ')}x ${item.name} (${item.size})  ${(item.price * item.quantity).toFixed(2)} lei`
@@ -1917,13 +1931,13 @@
             console.log('Link WhatsApp:', whatsappLink);
             console.log('🚀 DESCHIDERE WHATSAPP...');
             
-            // Open WhatsApp - direct call without preventDefault
+            // deschide whatsapp - apel direct fara preventdefault
             window.open(whatsappLink, '_blank');
             
-            // Success notification
+            // notificare de succes
             showNotification('Comanda a fost plasată! Vă vom contacta în curând.');
             
-            // Clear cart and close modal
+            // goleste cosul si inchide modalul
             setTimeout(() => {
                 console.log('Curățare coș și închidere modal...');
                 cart = [];
@@ -1932,17 +1946,17 @@
                 hideCheckoutModal();
                 hideCart();
                 
-                // Reset form
+                // reseteaza formularul
                 document.getElementById('customerName').value = '';
                 document.getElementById('customerPhone').value = '';
                 document.getElementById('customerAddress').value = '';
                 
-                // Uncheck all extras and reset quantities
+                // debifeaza toate extra si reseteaza cantitatile
                 document.querySelectorAll('.sauce-checkbox, .drink-checkbox').forEach(checkbox => {
                     checkbox.checked = false;
                 });
                 
-                // Reset quantities and hide quantity divs
+                // reseteaza cantitatile si ascunde div-urile de cantitate
                 Object.keys(extrasQuantities).forEach(itemId => {
                     delete extrasQuantities[itemId];
                     const quantityDiv = document.getElementById(itemId + '-quantity');
@@ -1960,14 +1974,14 @@
         }
         
         function showNotification(message) {
-            // Create notification element
+            // creeaza elementul de notificare
             const notification = document.createElement('div');
             notification.className = 'fixed top-20 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
             notification.textContent = message;
             
             document.body.appendChild(notification);
             
-            // Remove after 3 seconds
+            // sterge dupa 3 secunde
             setTimeout(() => {
                 notification.remove();
             }, 3000);
@@ -1977,7 +1991,7 @@
             document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });
         }
         
-        // Menu Modal Functions
+        // functii pentru modal meniu
         function showMenuModal() {
             document.getElementById('menuModal').classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -1990,7 +2004,7 @@
             }
         }
         
-        // Contact Form Functions
+        // functii pentru formular de contact
         function sendContactEmail(event) {
             event.preventDefault();
             
@@ -1998,37 +2012,37 @@
             const email = document.getElementById('contactEmail').value;
             const message = document.getElementById('contactMessage').value;
             
-            // Create email content
+            // creeaza continutul emailului
             const emailSubject = `Mesaj nou de la ${name} - Eat Pizza Contact`;
             const emailBody = `Nume: ${name}\nEmail: ${email}\n\nMesaj:\n${message}\n\n---\nTrimis de pe site-ul Eat Pizza`;
             
-            // Create mailto link
+            // creeaza link mailto
             const mailtoLink = `mailto:florinadrianotves@yahoo.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
             
-            // Open email client
+            // deschide clientul de email
             window.location.href = mailtoLink;
             
-            // Show notification
+            // arata notificare
             showNotification('Se deschide clientul de email pentru a trimite mesajul...');
             
-            // Reset form
+            // reseteaza formularul
             document.getElementById('contactForm').reset();
         }
         
-        // Size selector functionality
+        // functionalitate pentru selector de marime
         document.addEventListener('click', function(e) {
             if (e.target.classList.contains('size-btn')) {
                 const card = e.target.closest('.card-hover');
                 const buttons = card.querySelectorAll('.size-btn');
                 const addButton = card.querySelector('button[onclick^="addToCart"]');
                 
-                // Remove selected class from all buttons
+                // sterge clasa selected de la toate butoanele
                 buttons.forEach(btn => btn.classList.remove('selected'));
                 
-                // Add selected class to clicked button
+                // adauga clasa selected la butonul apasat
                 e.target.classList.add('selected');
                 
-                // Update add to cart button
+                // actualizeaza butonul de adaugare in cos
                 const size = e.target.dataset.size;
                 const price = parseFloat(e.target.dataset.price);
                 const name = card.querySelector('h3').textContent;
@@ -2038,7 +2052,7 @@
             }
         });
         
-        // Smooth scrolling for navigation links
+        // scroll smooth pentru linkurile de navigatie
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -2048,13 +2062,13 @@
                         behavior: 'smooth',
                         block: 'start'
                     });
-                    // Close mobile menu if open
+                    // inchide meniul mobil daca e deschis
                     document.getElementById('mobileMenu').classList.add('hidden');
                 }
             });
         });
         
-        // Add scroll effect to navigation
+        // adauga efect la scroll pentru navigatie
         window.addEventListener('scroll', function() {
             const nav = document.querySelector('nav');
             if (window.scrollY > 100) {
@@ -2064,7 +2078,7 @@
             }
         });
         
-        // Intersection Observer for fade-in animations
+        // intersection observer pentru animatii de aparitie
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -2078,7 +2092,7 @@
             });
         }, observerOptions);
         
-        // Observe all sections
+        // observa toate sectiunile
         document.querySelectorAll('section').forEach(section => {
             observer.observe(section);
         });
